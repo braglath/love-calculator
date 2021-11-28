@@ -11,11 +11,19 @@ class Themes {
     highlightColor: const Color(0xffFFADFF),
     hintColor: Colors.black,
     dividerColor: const Color(0xffFFD6FF),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: TextButton.styleFrom(
+        backgroundColor: Colors.red,
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        side: const BorderSide(color: Colors.white, width: 2),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+    ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: ColorResources.mainLightColor),
     appBarTheme: const AppBarTheme(
       color: ColorResources.mainLightColor,
-      elevation: 0.0,
+      elevation: 4.0,
       iconTheme: IconThemeData(color: Colors.black),
     ),
     textTheme: TextTheme(
@@ -27,22 +35,26 @@ class Themes {
       headline1: const TextStyle(),
       headline2: const TextStyle(),
       headline3: const TextStyle(),
-      headline4:
-          const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+      headline4: const TextStyle(fontWeight: FontWeight.bold),
       headline5: const TextStyle(),
       headline6: const TextStyle(),
       caption: const TextStyle(//color: kHintColor
           ),
-    ).apply(bodyColor: Colors.white),
+    ).apply(bodyColor: Colors.white, fontFamily: 'PTSansNarrow'),
   );
   static final dark = ThemeData.dark().copyWith(
-    backgroundColor: Colors.black,
     primaryColor: ColorResources.mainDarkColor,
+    scaffoldBackgroundColor: ColorResources.darkScaffoldBGcolor,
+    splashColor: const Color(0xffD41DED),
+    disabledColor: Colors.grey[500],
+    highlightColor: const Color(0xffDB42F0),
+    hintColor: Colors.black,
+    dividerColor: const Color(0xffE67BF4),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: ColorResources.mainDarkColor),
     appBarTheme: const AppBarTheme(
       color: ColorResources.mainDarkColor,
-      elevation: 0.0,
+      elevation: 4.0,
       iconTheme: IconThemeData(color: Colors.black),
     ),
     textTheme: TextTheme(
@@ -54,12 +66,11 @@ class Themes {
       headline1: const TextStyle(),
       headline2: const TextStyle(),
       headline3: const TextStyle(),
-      headline4:
-          const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+      headline4: const TextStyle(fontWeight: FontWeight.bold),
       headline5: const TextStyle(),
       headline6: const TextStyle(),
       caption: const TextStyle(//color: kHintColor
           ),
-    ).apply(bodyColor: Colors.white),
+    ).apply(bodyColor: Colors.white, fontFamily: 'PTSansNarrow'),
   );
 }
