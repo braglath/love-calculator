@@ -5,15 +5,17 @@ class Themes {
   static final light = ThemeData.light().copyWith(
     scaffoldBackgroundColor: ColorResources.lightScaffoldBGcolor,
     backgroundColor: Colors.orange,
-    primaryColor: ColorResources.mainLightColor,
+    primaryColorLight: Colors.black,
     splashColor: const Color(0xffFF5CFF),
     disabledColor: Colors.grey[500],
     highlightColor: const Color(0xffFFADFF),
     hintColor: Colors.black,
     dividerColor: const Color(0xffFFD6FF),
+    //
+
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: TextButton.styleFrom(
-        backgroundColor: Colors.red,
+        backgroundColor: ColorResources.mainLightColor,
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         side: const BorderSide(color: Colors.white, width: 2),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -40,7 +42,7 @@ class Themes {
       headline6: const TextStyle(),
       caption: const TextStyle(//color: kHintColor
           ),
-    ).apply(bodyColor: Colors.white, fontFamily: 'PTSansNarrow'),
+    ).apply(bodyColor: Colors.white, fontFamily: 'josefin_sans'),
   );
   static final dark = ThemeData.dark().copyWith(
     primaryColor: ColorResources.mainDarkColor,
@@ -50,6 +52,15 @@ class Themes {
     highlightColor: const Color(0xffDB42F0),
     hintColor: Colors.black,
     dividerColor: const Color(0xffE67BF4),
+    //
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: TextButton.styleFrom(
+        backgroundColor: ColorResources.mainDarkColor,
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        side: const BorderSide(color: Colors.white, width: 2),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+    ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: ColorResources.mainDarkColor),
     appBarTheme: const AppBarTheme(
@@ -71,6 +82,6 @@ class Themes {
       headline6: const TextStyle(),
       caption: const TextStyle(//color: kHintColor
           ),
-    ).apply(bodyColor: Colors.white, fontFamily: 'PTSansNarrow'),
+    ).apply(bodyColor: Colors.white, fontFamily: 'josefin_sans'),
   );
 }
