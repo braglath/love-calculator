@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
+import 'package:new_love_calculator_2021/services/gender_storage.dart';
+import 'package:new_love_calculator_2021/services/theme_service.dart';
 import 'package:new_love_calculator_2021/utility/colors.dart';
 
 class CustomChips extends StatefulWidget {
-  CustomChips({Key? key}) : super(key: key);
+  final bool isFirstGender;
+  const CustomChips({Key? key, required this.isFirstGender}) : super(key: key);
 
   @override
   State<CustomChips> createState() => _CustomChipsState();
@@ -13,15 +16,23 @@ class _CustomChipsState extends State<CustomChips> {
   bool _isMaleSelected = false;
   bool _isFemaleSelected = false;
   String _gender = '';
+  String _firstGender = '';
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _gender.isEmpty
-            ? const Text('Select gender')
-            : Text('Selected gender - $_gender'),
+        RichText(
+          text: TextSpan(
+            text: _gender.isEmpty ? 'Select gender' : 'Selected gender - ',
+            children: <TextSpan>[
+              TextSpan(
+                  text: _gender.isEmpty ? '' : _gender,
+                  style: context.theme.textTheme.subtitle1),
+            ],
+          ),
+        ),
         SizedBox(
           child: Row(
             children: [
@@ -33,10 +44,22 @@ class _CustomChipsState extends State<CustomChips> {
                       _isMaleSelected = true;
                       _gender = 'Male';
                     });
+                    if (widget.isFirstGender == true) {
+                      GenderStorage().saveFirstGenderToBox(_gender);
+                    } else {
+                      GenderStorage().saveSecondGenderToBox(_gender);
+                    }
+                    print('gender storage - $_gender');
                   },
-                  child: const CircleAvatar(
+                  child: CircleAvatar(
+                    backgroundColor: ThemeService().theme == ThemeMode.light
+                        ? ColorResources.mainLightColor
+                        : ColorResources.mainDarkColor,
                     radius: 15,
-                    child: Icon(Icons.male),
+                    child: const Icon(
+                      Icons.male,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -46,10 +69,22 @@ class _CustomChipsState extends State<CustomChips> {
                     _isFemaleSelected = true;
                     _gender = 'Female';
                   });
+                  if (widget.isFirstGender == true) {
+                    GenderStorage().saveFirstGenderToBox(_gender);
+                  } else {
+                    GenderStorage().saveSecondGenderToBox(_gender);
+                  }
+                  print('gender storage - $_gender');
                 },
-                child: const CircleAvatar(
+                child: CircleAvatar(
+                  backgroundColor: ThemeService().theme == ThemeMode.light
+                      ? ColorResources.mainLightColor
+                      : ColorResources.mainDarkColor,
                   radius: 15,
-                  child: Icon(Icons.female),
+                  child: const Icon(
+                    Icons.female,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ],

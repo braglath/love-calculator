@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
-import 'package:get/get.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
-import 'package:http/http.dart';
-import 'package:new_love_calculator_2021/Controllers/love_percentage_controller.dart';
-import 'package:new_love_calculator_2021/services/api_service.dart';
-import 'package:new_love_calculator_2021/services/theme_service.dart';
-import 'package:new_love_calculator_2021/utility/colors.dart';
-import 'package:new_love_calculator_2021/widgets/Custom_bottom_nav_widget.dart';
+import 'package:new_love_calculator_2021/services/gender_storage.dart';
 import 'package:new_love_calculator_2021/widgets/custom_app_bar_widget.dart';
+import 'package:new_love_calculator_2021/widgets/custom_background_widget.dart';
 import 'package:new_love_calculator_2021/widgets/custom_button_widget.dart';
 import 'package:new_love_calculator_2021/widgets/custom_chips_widget.dart';
 import 'package:new_love_calculator_2021/widgets/custom_dragable_sheet_widget.dart';
@@ -28,59 +22,110 @@ class _MainHomePageState extends State<MainHomePage> {
   bool isSwitchOn = false;
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController secondNameController = TextEditingController();
-  final LovePercentageController lovePercentageController =
-      Get.put(LovePercentageController());
+  final _form = GlobalKey<FormState>();
+  String firstGender = '';
+  String secondGender = '';
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      GenderStorage().deleteFirstGender();
+      GenderStorage().deleteSecondGender();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
         needBackButton: false,
       ),
       // bottomNavigationBar: const CustomBottomNavBar(),
-      body: _mainBody(),
+      body: Stack(
+        children: [
+          const CustomBackground(),
+          Center(
+              child: SingleChildScrollView(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  reverse: true,
+                  child: _mainBody())),
+        ],
+      ),
     );
   }
 
   Widget _mainBody() {
     return Padding(
-      padding: const EdgeInsets.all(15),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          CustomChips(),
-          CustomInputField(
-            title: 'First Name',
-            controller: firstNameController,
+        padding: const EdgeInsets.all(15),
+        child: Form(
+          key: _form,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const CustomChips(
+                isFirstGender: true,
+              ),
+              CustomInputField(
+                title: 'First Name',
+                controller: firstNameController,
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              const CustomChips(
+                isFirstGender: false,
+              ),
+              CustomInputField(
+                title: 'Second Name',
+                controller: secondNameController,
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              CustomButton(
+                  insideText: 'Calculate',
+                  icon: Icons.calculate,
+                  onPressedFunction: () {
+                    // print(
+                    //     'first name - ${firstNameController.text} \n second name - ${secondNameController.text}');
+                    setState(() {
+                      firstGender = GenderStorage().loadFirstGenderFromBox();
+                      secondGender = GenderStorage().loadSecondGenderFromBox();
+                    });
+                    if (FocusScope.of(context).isFirstFocus) {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    }
+
+                    if (_form.currentState!.validate()) {
+                      if (firstGender.isNotEmpty && secondGender.isNotEmpty) {
+                        showModalBottomSheet(
+                            // enableDrag: false,
+                            // isDismissible: false,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) => CustomDragableBottomSheet(
+                                  firstNameController: firstNameController,
+                                  secondNameController: secondNameController,
+                                ));
+                      } else {
+                        final snackBar = SnackBar(
+                          duration: const Duration(seconds: 3),
+                          content: Text(
+                            'Select a gender',
+                            style: context.theme.textTheme.headline6,
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+                    }
+                  }),
+            ],
           ),
-          const SizedBox(
-            height: 25,
-          ),
-          CustomChips(),
-          CustomInputField(
-            title: 'Second Name',
-            controller: secondNameController,
-          ),
-          const SizedBox(
-            height: 50,
-          ),
-          CustomButton(
-              insideText: 'Calculate',
-              onPressedFunction: () {
-                print(
-                    'first name - ${firstNameController.text} \n second name - ${secondNameController.text}');
-                APIservices.lovePercentage(
-                    firstNameController.text, secondNameController.text);
-                showModalBottomSheet(
-                    // enableDrag: false,
-                    // isDismissible: false,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    context: context,
-                    builder: (context) => const CustomDragableBottomSheet());
-              }),
-        ],
-      ),
-    );
+        ));
   }
 }

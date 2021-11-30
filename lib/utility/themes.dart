@@ -3,7 +3,7 @@ import 'package:new_love_calculator_2021/utility/colors.dart';
 
 class Themes {
   static final light = ThemeData.light().copyWith(
-    scaffoldBackgroundColor: ColorResources.lightScaffoldBGcolor,
+    scaffoldBackgroundColor: Color(0xffFFADFF).withOpacity(0.5),
     backgroundColor: Colors.orange,
     primaryColorLight: Colors.black,
     splashColor: const Color(0xffFF5CFF),
@@ -12,6 +12,9 @@ class Themes {
     hintColor: Colors.black,
     dividerColor: const Color(0xffFFD6FF),
     //
+
+    snackBarTheme: const SnackBarThemeData(
+        backgroundColor: ColorResources.mainLightColor, elevation: 4),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: TextButton.styleFrom(
@@ -24,8 +27,8 @@ class Themes {
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: ColorResources.mainLightColor),
     appBarTheme: const AppBarTheme(
-      color: ColorResources.mainLightColor,
-      elevation: 4.0,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
       iconTheme: IconThemeData(color: Colors.black),
     ),
     textTheme: TextTheme(
@@ -46,13 +49,17 @@ class Themes {
   );
   static final dark = ThemeData.dark().copyWith(
     primaryColor: ColorResources.mainDarkColor,
-    scaffoldBackgroundColor: ColorResources.darkScaffoldBGcolor,
+    scaffoldBackgroundColor: Color(0xffFFADFF).withOpacity(0.5),
     splashColor: const Color(0xffD41DED),
     disabledColor: Colors.grey[500],
     highlightColor: const Color(0xffDB42F0),
     hintColor: Colors.black,
     dividerColor: const Color(0xffE67BF4),
     //
+
+    snackBarTheme: const SnackBarThemeData(
+        backgroundColor: ColorResources.mainDarkColor, elevation: 4),
+
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: TextButton.styleFrom(
         backgroundColor: ColorResources.mainDarkColor,
@@ -64,8 +71,8 @@ class Themes {
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: ColorResources.mainDarkColor),
     appBarTheme: const AppBarTheme(
-      color: ColorResources.mainDarkColor,
-      elevation: 4.0,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
       iconTheme: IconThemeData(color: Colors.black),
     ),
     textTheme: TextTheme(

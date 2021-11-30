@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:new_love_calculator_2021/services/theme_service.dart';
-import 'package:vector_math/vector_math.dart' as math;
-import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
   final bool needBackButton;
@@ -21,6 +18,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+
       automaticallyImplyLeading: widget.needBackButton ? true : false,
       centerTitle: true,
       title: Text(

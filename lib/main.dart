@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:new_love_calculator_2021/pages/splash_screen.dart';
+import 'package:new_love_calculator_2021/pages/home.dart';
 import 'package:new_love_calculator_2021/services/theme_service.dart';
 import 'package:new_love_calculator_2021/utility/page_routes.dart';
 import 'package:new_love_calculator_2021/utility/themes.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 
 void main() async {
   await GetStorage.init();
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: Themes.light,
       darkTheme: Themes.dark,
       themeMode: ThemeService().theme,
-      home: const SplashScreen(),
+      home: MainHomePage(title: 'New Love Calculator 2021'),
       routes: PageRoutes().routes(),
     );
   }

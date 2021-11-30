@@ -27,22 +27,32 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  animated_splash_screen: ^1.1.0
   cupertino_icons: ^1.0.2
   equatable: ^2.0.3
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.0
-  flutter_switch: ^0.3.2
+  flutter_spinkit: ^5.1.0
   get: ^4.3.8
   get_storage: ^2.0.3
   http: ^0.13.4
   lottie: ^1.2.1
+  page_transition: 2.0.1-nullsafety.0
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.9.2"
+  flutter_app_name: ^0.1.1
   flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"
+
+flutter_app_name:
+  name: "New Love Calculator 2021"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -56,7 +66,15 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/lottie/splashscreenlove.json
-
+    - assets/lottie/heartresult.json
+    - assets/lottie/heartfly.json
+    - assets/lottie/leaffalling.json
+    - assets/lottie/simplehearts.json
+    - assets/lottie/heartbanner.json
+    - assets/lottie/heart.json
+    - assets/images/lightbg.jpg
+    - assets/images/darkbg.jpg
+    - assets/images/customcardlightbg.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

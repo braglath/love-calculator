@@ -1,5 +1,9 @@
 class AssetsUrls {
   static const String splashscreen = 'assets/lottie/splashscreenlove.json';
+  static const String scaffoldLightBackground = 'assets/images/lightbg.jpg';
+  static const String scaffoldDarkBackground = 'assets/images/darkbg.jpg';
+  static const String customCardLightBackgound =
+      'assets/images/customcardlightbg.jpg';
 }
 
 class APIstrings {
