@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:new_love_calculator_2021/services/gender_storage.dart';
+import 'package:new_love_calculator_2021/services/google_ad_service.dart';
+import 'package:new_love_calculator_2021/utility/strings.dart';
 import 'package:new_love_calculator_2021/widgets/custom_app_bar_widget.dart';
 import 'package:new_love_calculator_2021/widgets/custom_background_widget.dart';
+import 'package:new_love_calculator_2021/widgets/custom_banner_ad_widget.dart';
 import 'package:new_love_calculator_2021/widgets/custom_button_widget.dart';
 import 'package:new_love_calculator_2021/widgets/custom_chips_widget.dart';
 import 'package:new_love_calculator_2021/widgets/custom_dragable_sheet_widget.dart';
@@ -42,7 +46,8 @@ class _MainHomePageState extends State<MainHomePage> {
       appBar: CustomAppBar(
         needBackButton: false,
       ),
-      // bottomNavigationBar: const CustomBottomNavBar(),
+      extendBody: true,
+      bottomNavigationBar: const CustomBannerAd(),
       body: Stack(
         children: [
           const CustomBackground(),
@@ -69,7 +74,7 @@ class _MainHomePageState extends State<MainHomePage> {
                 isFirstGender: true,
               ),
               CustomInputField(
-                title: 'First Name',
+                title: UsableStrings.homeFirstName,
                 controller: firstNameController,
               ),
               const SizedBox(
@@ -79,14 +84,14 @@ class _MainHomePageState extends State<MainHomePage> {
                 isFirstGender: false,
               ),
               CustomInputField(
-                title: 'Second Name',
+                title: UsableStrings.homeSecondName,
                 controller: secondNameController,
               ),
               const SizedBox(
                 height: 50,
               ),
               CustomButton(
-                  insideText: 'Calculate',
+                  insideText: UsableStrings.homeCalculate,
                   icon: Icons.calculate,
                   onPressedFunction: () {
                     // print(
@@ -115,7 +120,7 @@ class _MainHomePageState extends State<MainHomePage> {
                         final snackBar = SnackBar(
                           duration: const Duration(seconds: 3),
                           content: Text(
-                            'Select a gender',
+                            UsableStrings.homeSelectAGender,
                             style: context.theme.textTheme.headline6,
                             textAlign: TextAlign.center,
                           ),

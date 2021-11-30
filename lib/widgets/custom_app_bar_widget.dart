@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:new_love_calculator_2021/services/theme_service.dart';
+import 'package:new_love_calculator_2021/utility/strings.dart';
 
 class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
   final bool needBackButton;
@@ -18,11 +19,10 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-
       automaticallyImplyLeading: widget.needBackButton ? true : false,
       centerTitle: true,
       title: Text(
-        'Love Calculator 2021',
+        UsableStrings.appBarTitle,
         style: context.theme.textTheme.headline6,
       ),
       actions: <Widget>[
@@ -44,7 +44,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               color: Colors.white,
             ),
       splashRadius: 12,
-      tooltip: 'Toggle Dark mode',
+      tooltip: UsableStrings.toggleIconToolTip,
     );
   }
 }

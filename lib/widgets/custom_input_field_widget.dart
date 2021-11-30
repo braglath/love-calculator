@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
+import 'package:new_love_calculator_2021/services/theme_service.dart';
+import 'package:new_love_calculator_2021/utility/colors.dart';
+import 'package:new_love_calculator_2021/utility/strings.dart';
 
 class CustomInputField extends StatelessWidget {
   final String title;
@@ -18,10 +21,10 @@ class CustomInputField extends StatelessWidget {
         // autovalidate: true,
         validator: (val) {
           if (val!.isEmpty) {
-            return "Name cannot be empty";
+            return UsableStrings.nameIsEmpty;
           }
           if (val.length > 12) {
-            return "Do not enter more than 12 characters";
+            return UsableStrings.moreThan12Charc;
           }
           return null;
         },
@@ -33,11 +36,17 @@ class CustomInputField extends StatelessWidget {
           labelText: title,
           labelStyle: context.theme.textTheme.headline6,
           fillColor: Colors.white,
+          errorStyle: context.theme.textTheme.subtitle2?.copyWith(
+              color: ThemeService().theme == ThemeMode.light
+                  ? ColorResources.mainLightColor
+                  : ColorResources.mainDarkColor),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.0),
-            borderSide: const BorderSide(
+            borderSide: BorderSide(
               width: 2,
-              color: Color(0xffEF466F),
+              color: ThemeService().theme == ThemeMode.light
+                  ? ColorResources.mainLightColor
+                  : ColorResources.mainDarkColor,
             ),
           ),
           enabledBorder: OutlineInputBorder(

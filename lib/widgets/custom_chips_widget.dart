@@ -3,6 +3,7 @@ import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:new_love_calculator_2021/services/gender_storage.dart';
 import 'package:new_love_calculator_2021/services/theme_service.dart';
 import 'package:new_love_calculator_2021/utility/colors.dart';
+import 'package:new_love_calculator_2021/utility/strings.dart';
 
 class CustomChips extends StatefulWidget {
   final bool isFirstGender;
@@ -42,7 +43,7 @@ class _CustomChipsState extends State<CustomChips> {
                   onTap: () {
                     setState(() {
                       _isMaleSelected = true;
-                      _gender = 'Male';
+                      _gender = UsableStrings.genderMale;
                     });
                     if (widget.isFirstGender == true) {
                       GenderStorage().saveFirstGenderToBox(_gender);
@@ -67,7 +68,7 @@ class _CustomChipsState extends State<CustomChips> {
                 onTap: () {
                   setState(() {
                     _isFemaleSelected = true;
-                    _gender = 'Female';
+                    _gender = UsableStrings.genderFemale;
                   });
                   if (widget.isFirstGender == true) {
                     GenderStorage().saveFirstGenderToBox(_gender);

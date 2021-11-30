@@ -5,9 +5,11 @@ import 'package:new_love_calculator_2021/Animations/opacity_animation.dart';
 import 'package:new_love_calculator_2021/Models/love_percentage_model.dart';
 import 'package:new_love_calculator_2021/services/api_service.dart';
 import 'package:new_love_calculator_2021/services/gender_storage.dart';
+import 'package:new_love_calculator_2021/services/google_ad_service.dart';
 import 'package:new_love_calculator_2021/services/theme_service.dart';
 import 'package:new_love_calculator_2021/utility/colors.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:new_love_calculator_2021/utility/strings.dart';
 import 'package:new_love_calculator_2021/widgets/custom_button_widget.dart';
 import 'package:new_love_calculator_2021/widgets/custom_card_background_widget.dart';
 import 'package:new_love_calculator_2021/widgets/custom_counter_widget.dart';
@@ -30,6 +32,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
   String _firstGender = '';
   String _secondGender = '';
   int _lovePercentage = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +162,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
                             direction: Axis.vertical,
                             children: [
                               Icon(
-                                _firstGender.contains('Male')
+                                _firstGender.contains(UsableStrings.genderMale)
                                     ? Icons.male
                                     : Icons.female,
                                 color: Colors.white,
@@ -186,7 +189,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
                             direction: Axis.vertical,
                             children: [
                               Icon(
-                                _secondGender.contains('Female')
+                                _secondGender.contains(UsableStrings.genderFemale)
                                     ? Icons.female
                                     : Icons.male,
                                 color: Colors.white,
@@ -205,7 +208,6 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
                       CustomCounter(
                         percentage: double.parse(snapshot.data!.percentage),
                       ),
-                      
                       Text(
                         snapshot.data!.result,
                         style: context.theme.textTheme.headline4,
