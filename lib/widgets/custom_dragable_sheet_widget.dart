@@ -1,10 +1,14 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:lottie/lottie.dart';
 import 'package:new_love_calculator_2021/Animations/opacity_animation.dart';
 import 'package:new_love_calculator_2021/Models/love_percentage_model.dart';
 import 'package:new_love_calculator_2021/services/api_service.dart';
 import 'package:new_love_calculator_2021/services/gender_storage.dart';
+import 'package:new_love_calculator_2021/services/save_screenshot.dart';
 import 'package:new_love_calculator_2021/services/theme_service.dart';
 import 'package:new_love_calculator_2021/utility/assets_urls.dart';
 import 'package:new_love_calculator_2021/utility/colors.dart';
@@ -13,6 +17,7 @@ import 'package:new_love_calculator_2021/utility/strings.dart';
 import 'package:new_love_calculator_2021/widgets/custom_button_widget.dart';
 import 'package:new_love_calculator_2021/widgets/custom_card_background_widget.dart';
 import 'package:new_love_calculator_2021/widgets/custom_counter_widget.dart';
+import 'package:screenshot/screenshot.dart';
 
 class CustomDragableBottomSheet extends StatefulWidget {
   final TextEditingController firstNameController;
@@ -32,6 +37,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
   final String _firstGender = '';
   final String _secondGender = '';
   int _lovePercentage = 0;
+  final screenshotController = ScreenshotController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +56,11 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
                 top: Radius.circular(20),
               ),
             ),
-            child: Stack(
-              children: [const CustomCardBackground(), mainContent()],
+            child: Screenshot(
+              controller: screenshotController,
+              child: Stack(
+                children: [const CustomCardBackground(), mainContent()],
+              ),
             ),
           ),
         ));
@@ -177,8 +186,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
                           ),
                           SizedBox(
                             width: 100,
-                            child: Lottie.asset(
-                                'assets/lottie/heartresult.json',
+                            child: Lottie.asset(LottieAssetsUrl.heartResult,
                                 fit: BoxFit.contain),
                           ),
                           Wrap(
@@ -232,7 +240,13 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CustomButton(
-              insideText: '', icon: Icons.save_alt, onPressedFunction: () {}),
+              insideText: '',
+              icon: Icons.save_alt,
+              onPressedFunction: () async {
+                final image = await screenshotController.capture();
+                if (image == null) return;
+                await SaveScreenshot().saveImage(image);
+              }),
           const SizedBox(
             width: 10,
           ),

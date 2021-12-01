@@ -13,6 +13,7 @@ class LottieAssetsUrl {
   static const String percentage25to50 = 'assets/lottie/simplehearts.json';
   static const String percentage50to75 = 'assets/lottie/heartfly.json';
   static const String percentage75to100 = 'assets/lottie/heartbanner.json';
+  static const String heartResult = 'assets/lottie/heartresult.json';
 }
 
 class APIstrings {

@@ -35,7 +35,10 @@ dependencies:
   get_storage: ^2.0.3
   google_mobile_ads: ^1.0.0
   http: ^0.13.4
+  image_gallery_saver: ^1.7.1
   lottie: ^1.2.1
+  permission_handler: ^8.3.0
+  screenshot: ^1.2.3
 
 dev_dependencies:
   flutter_app_name: ^0.1.1
@@ -67,6 +70,7 @@ flutter:
     - assets/lottie/leaffalling.json
     - assets/lottie/simplehearts.json
     - assets/lottie/heartbanner.json
+    - assets/lottie/heartresult.json
     - assets/images/lightbg.jpg
     - assets/images/darkbg.jpg
     - assets/images/customcardlightbg.jpg
