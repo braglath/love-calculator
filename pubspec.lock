@@ -141,7 +141,7 @@ packages:
       name: get
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.3.8"
+    version: "4.5.1"
   get_storage:
     dependency: "direct main"
     description:
@@ -176,7 +176,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.8"
+    version: "3.1.0"
   image_gallery_saver:
     dependency: "direct main"
     description:

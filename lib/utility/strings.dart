@@ -12,6 +12,7 @@ class UsableStrings {
   // ? custom appbar widget
   static const String appBarTitle = 'Love Calculator 2021';
   static const String toggleIconToolTip = 'Toggle Dark mode';
+  static const String noADSToolTip = 'Remove ads';
 
   // ? custom chips widget
   static const String genderMale = 'Male';

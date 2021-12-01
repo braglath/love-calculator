@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:new_love_calculator_2021/services/theme_service.dart';
+import 'package:new_love_calculator_2021/utility/assets_urls.dart';
+import 'package:new_love_calculator_2021/utility/colors.dart';
 import 'package:new_love_calculator_2021/utility/strings.dart';
 
 class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
@@ -24,6 +26,17 @@ class _CustomAppBarState extends State<CustomAppBar> {
       title: Text(
         UsableStrings.appBarTitle,
         style: context.theme.textTheme.headline6,
+      ),
+      leading: IconButton(
+        splashRadius: 12,
+        tooltip: UsableStrings.noADSToolTip,
+        icon: const Icon(
+          Icons.notifications_off,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          print('razorpay to stop ads');
+        },
       ),
       actions: <Widget>[
         _nightModeToggle(),

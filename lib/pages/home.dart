@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:new_love_calculator_2021/services/find_paid_user.dart';
 import 'package:new_love_calculator_2021/services/gender_storage.dart';
 import 'package:new_love_calculator_2021/services/google_ad_service.dart';
 import 'package:new_love_calculator_2021/utility/strings.dart';
@@ -37,6 +38,7 @@ class _MainHomePageState extends State<MainHomePage> {
       GenderStorage().deleteFirstGender();
       GenderStorage().deleteSecondGender();
     });
+    print(' is paid user - ${FindPaidUser().checkisPaidUser()}');
   }
 
   @override
@@ -47,7 +49,9 @@ class _MainHomePageState extends State<MainHomePage> {
         needBackButton: false,
       ),
       extendBody: true,
-      bottomNavigationBar: const CustomBannerAd(),
+      bottomNavigationBar: FindPaidUser().checkisPaidUser()
+          ? const SizedBox.shrink()
+          : const CustomBannerAd(),
       body: Stack(
         children: [
           const CustomBackground(),

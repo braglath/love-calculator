@@ -9,6 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:new_love_calculator_2021/Animations/opacity_animation.dart';
 import 'package:new_love_calculator_2021/Models/love_percentage_model.dart';
 import 'package:new_love_calculator_2021/services/api_service.dart';
+import 'package:new_love_calculator_2021/services/find_paid_user.dart';
 import 'package:new_love_calculator_2021/services/gender_storage.dart';
 import 'package:new_love_calculator_2021/services/google_ad_service.dart';
 import 'package:new_love_calculator_2021/services/save_screenshot.dart';
@@ -44,15 +45,16 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
   int maxFailedLoadAttempts = 3;
   int _numRewardedLoadAttempts = 0;
   static RewardedAd? _rewardedAd;
+  final _isPaidUser = FindPaidUser().checkisPaidUser();
 
   @override
   void initState() {
     super.initState();
-    AdMobService().createInterAd();
-    AdMobService().createRewardedAd();
+    _isPaidUser ? null : AdMobService().createInterAd();
+    _isPaidUser ? null : AdMobService().createRewardedAd();
     _createRewardedAd();
-    Future.delayed(
-        const Duration(seconds: 5), () => AdMobService().showInterad());
+    Future.delayed(const Duration(seconds: 5),
+        () => _isPaidUser ? null : AdMobService().showInterad());
   }
 
   @override
@@ -266,7 +268,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
               insideText: '',
               icon: Icons.camera_alt,
               onPressedFunction: () async {
-                AdMobService().showRewardedAd();
+                _isPaidUser ? null : AdMobService().showRewardedAd();
                 final image = await screenshotController.capture();
                 if (image == null) return;
                 await SaveScreenshot().saveImage(image);
@@ -278,7 +280,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
               insideText: '',
               icon: Icons.share,
               onPressedFunction: () {
-                _showRewardedAd();
+                _isPaidUser ? null : _showRewardedAd();
               }),
           const SizedBox(
             width: 10,
@@ -324,7 +326,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
       onAdDismissedFullScreenContent: (RewardedAd ad) async {
         print('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
-        _createRewardedAd();
+        _isPaidUser ? null : _createRewardedAd();
         final image = await screenshotController.capture();
         if (image == null) return;
         await SaveScreenshot().saveAndShare(image);
