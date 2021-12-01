@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:new_love_calculator_2021/Animations/opacity_animation.dart';
-
 import 'package:new_love_calculator_2021/utility/assets_urls.dart';
 
 class CustomCardBackground extends StatelessWidget {

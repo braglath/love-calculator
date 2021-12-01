@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:new_love_calculator_2021/Models/love_percentage_model.dart';
 import 'package:new_love_calculator_2021/utility/assets_urls.dart';

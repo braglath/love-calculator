@@ -1,13 +1,16 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 import 'package:lottie/lottie.dart';
 import 'package:new_love_calculator_2021/Animations/opacity_animation.dart';
 import 'package:new_love_calculator_2021/Models/love_percentage_model.dart';
 import 'package:new_love_calculator_2021/services/api_service.dart';
 import 'package:new_love_calculator_2021/services/gender_storage.dart';
+import 'package:new_love_calculator_2021/services/google_ad_service.dart';
 import 'package:new_love_calculator_2021/services/save_screenshot.dart';
 import 'package:new_love_calculator_2021/services/theme_service.dart';
 import 'package:new_love_calculator_2021/utility/assets_urls.dart';
@@ -38,6 +41,26 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
   final String _secondGender = '';
   int _lovePercentage = 0;
   final screenshotController = ScreenshotController();
+  int maxFailedLoadAttempts = 3;
+  int _numRewardedLoadAttempts = 0;
+  static RewardedAd? _rewardedAd;
+
+  @override
+  void initState() {
+    super.initState();
+    AdMobService().createInterAd();
+    AdMobService().createRewardedAd();
+    _createRewardedAd();
+    Future.delayed(
+        const Duration(seconds: 5), () => AdMobService().showInterad());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    AdMobService.dispose();
+    _rewardedAd?.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -241,8 +264,9 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
         children: [
           CustomButton(
               insideText: '',
-              icon: Icons.save_alt,
+              icon: Icons.camera_alt,
               onPressedFunction: () async {
+                AdMobService().showRewardedAd();
                 final image = await screenshotController.capture();
                 if (image == null) return;
                 await SaveScreenshot().saveImage(image);
@@ -251,7 +275,11 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
             width: 10,
           ),
           CustomButton(
-              insideText: '', icon: Icons.share, onPressedFunction: () {}),
+              insideText: '',
+              icon: Icons.share,
+              onPressedFunction: () {
+                _showRewardedAd();
+              }),
           const SizedBox(
             width: 10,
           ),
@@ -263,4 +291,55 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
               }),
         ],
       );
+
+  void _createRewardedAd() {
+    RewardedAd.load(
+        adUnitId: UsableStrings.rewardedAdUnitID,
+        request: const AdRequest(),
+        rewardedAdLoadCallback: RewardedAdLoadCallback(
+          onAdLoaded: (RewardedAd ad) {
+            print('$ad loaded.');
+            _rewardedAd = ad;
+            _numRewardedLoadAttempts = 0;
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            print('RewardedAd failed to load: $error');
+            _rewardedAd = null;
+            _numRewardedLoadAttempts += 1;
+            if (_numRewardedLoadAttempts <= maxFailedLoadAttempts) {
+              _createRewardedAd();
+            }
+          },
+        ));
+  }
+
+  void _showRewardedAd() {
+    if (_rewardedAd == null) {
+      print('Warning: attempt to show rewarded before loaded.');
+      return;
+    }
+    _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (RewardedAd ad) =>
+          print('ad onAdShowedFullScreenContent.'),
+      onAdDismissedFullScreenContent: (RewardedAd ad) async {
+        print('$ad onAdDismissedFullScreenContent.');
+        ad.dispose();
+        _createRewardedAd();
+        final image = await screenshotController.capture();
+        if (image == null) return;
+        await SaveScreenshot().saveAndShare(image);
+      },
+      onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
+        print('$ad onAdFailedToShowFullScreenContent: $error');
+        ad.dispose();
+        _createRewardedAd();
+      },
+    );
+
+    _rewardedAd!.setImmersiveMode(true);
+    _rewardedAd!.show(onUserEarnedReward: (RewardedAd ad, RewardItem reward) {
+      print('$ad with reward $RewardItem(${reward.amount}, ${reward.type}');
+    });
+    _rewardedAd = null;
+  }
 }

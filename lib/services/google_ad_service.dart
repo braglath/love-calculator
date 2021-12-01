@@ -1,19 +1,27 @@
 import 'dart:io';
-
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:new_love_calculator_2021/utility/strings.dart';
 
 class AdMobService {
+  int maxFailedLoadAttempts = 3;
+  int _numRewardedLoadAttempts = 0;
+
   static String get bannerAdUnitId => Platform.isAndroid
       ? UsableStrings.bannerAdUnitID
       : UsableStrings.bannerAdUnitID;
 
-  InterstitialAd? _interstitialAd;
+  static InterstitialAd? _interstitialAd;
+  static RewardedAd? _rewardedAd;
 
   int numOfAttempLoad = 0;
 
   static initialize() {
     MobileAds.instance.initialize();
+  }
+
+  static void dispose() {
+    _interstitialAd?.dispose();
+    _rewardedAd?.dispose();
   }
 
   static BannerAd createBannerAd() {
@@ -40,15 +48,9 @@ class AdMobService {
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (InterstitialAd ad) {
           _interstitialAd = ad;
-          numOfAttempLoad = 0;
         },
         onAdFailedToLoad: (LoadAdError error) {
-          numOfAttempLoad + 1;
-          _interstitialAd = null;
-
-          if (numOfAttempLoad <= 2) {
-            createInterAd();
-          }
+          print('intertitial ad load error - $error');
         },
       ),
     );
@@ -57,22 +59,71 @@ class AdMobService {
   void showInterad() {
     if (_interstitialAd == null) {
       return;
+    } else {
+      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdShowedFullScreenContent: (InterstitialAd ad) {
+          print("ad onAdshowedFullscreen");
+        },
+        onAdWillDismissFullScreenContent: (InterstitialAd ad) {
+          print("ad Disposed");
+          ad.dispose();
+        },
+        onAdFailedToShowFullScreenContent:
+            (InterstitialAd ad, AdError aderror) {
+          print("$ad OnAdFailed $aderror");
+          ad.dispose();
+          createInterAd();
+        },
+      );
+      _interstitialAd?.show();
     }
-    _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (InterstitialAd ad) {
-        print("ad onAdshowedFullscreen");
-      },
-      onAdWillDismissFullScreenContent: (InterstitialAd ad) {
-        print("ad Disposed");
+  }
+
+  void createRewardedAd() {
+    RewardedAd.load(
+        adUnitId: UsableStrings.rewardedAdUnitID,
+        request: const AdRequest(),
+        rewardedAdLoadCallback: RewardedAdLoadCallback(
+          onAdLoaded: (RewardedAd ad) {
+            print('$ad loaded.');
+            _rewardedAd = ad;
+            _numRewardedLoadAttempts = 0;
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            print('RewardedAd failed to load: $error');
+            _rewardedAd = null;
+            _numRewardedLoadAttempts += 1;
+            if (_numRewardedLoadAttempts <= maxFailedLoadAttempts) {
+              createRewardedAd();
+            }
+          },
+        ));
+  }
+
+  void showRewardedAd() {
+    if (_rewardedAd == null) {
+      print('Warning: attempt to show rewarded before loaded.');
+      return;
+    }
+    _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (RewardedAd ad) =>
+          print('ad onAdShowedFullScreenContent.'),
+      onAdDismissedFullScreenContent: (RewardedAd ad) {
+        print('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
+        createRewardedAd();
       },
-      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError aderror) {
-        print("$ad OnAdFailed $aderror");
+      onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
+        print('$ad onAdFailedToShowFullScreenContent: $error');
         ad.dispose();
-        createInterAd();
+        createRewardedAd();
       },
     );
-    _interstitialAd!.show();
-    _interstitialAd = null;
+
+    _rewardedAd!.setImmersiveMode(true);
+    _rewardedAd!.show(onUserEarnedReward: (RewardedAd ad, RewardItem reward) {
+      print('$ad with reward $RewardItem(${reward.amount}, ${reward.type}');
+    });
+    _rewardedAd = null;
   }
 }
