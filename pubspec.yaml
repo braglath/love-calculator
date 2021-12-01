@@ -1,5 +1,5 @@
 name: new_love_calculator_2021
-description: A new Flutter project.
+description: new love calculator 2021.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -28,17 +28,14 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
-  equatable: ^2.0.3
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.0.0
   flutter_spinkit: ^5.1.0
   get: ^4.3.8
   get_storage: ^2.0.3
   google_mobile_ads: ^1.0.0
   http: ^0.13.4
   lottie: ^1.2.1
-  page_transition: 2.0.1-nullsafety.0
 
 dev_dependencies:
   flutter_app_name: ^0.1.1
@@ -66,13 +63,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/lottie/splashscreenlove.json
-    - assets/lottie/heartresult.json
     - assets/lottie/heartfly.json
     - assets/lottie/leaffalling.json
     - assets/lottie/simplehearts.json
     - assets/lottie/heartbanner.json
-    - assets/lottie/heart.json
     - assets/images/lightbg.jpg
     - assets/images/darkbg.jpg
     - assets/images/customcardlightbg.jpg

@@ -3,7 +3,7 @@ import 'package:new_love_calculator_2021/utility/colors.dart';
 
 class Themes {
   static final light = ThemeData.light().copyWith(
-    scaffoldBackgroundColor: Color(0xffFFADFF).withOpacity(0.5),
+    scaffoldBackgroundColor: const Color(0xffFFADFF).withOpacity(0.5),
     backgroundColor: Colors.orange,
     primaryColorLight: Colors.black,
     splashColor: const Color(0xffFF5CFF),
@@ -49,7 +49,7 @@ class Themes {
   );
   static final dark = ThemeData.dark().copyWith(
     primaryColor: ColorResources.mainDarkColor,
-    scaffoldBackgroundColor: Color(0xffFFADFF).withOpacity(0.5),
+    scaffoldBackgroundColor: const Color(0xffFFADFF).withOpacity(0.5),
     splashColor: const Color(0xffD41DED),
     disabledColor: Colors.grey[500],
     highlightColor: const Color(0xffDB42F0),

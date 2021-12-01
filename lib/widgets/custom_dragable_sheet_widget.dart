@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/src/extensions/context_extensions.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:new_love_calculator_2021/Animations/opacity_animation.dart';
 import 'package:new_love_calculator_2021/Models/love_percentage_model.dart';
 import 'package:new_love_calculator_2021/services/api_service.dart';
 import 'package:new_love_calculator_2021/services/gender_storage.dart';
-import 'package:new_love_calculator_2021/services/google_ad_service.dart';
 import 'package:new_love_calculator_2021/services/theme_service.dart';
+import 'package:new_love_calculator_2021/utility/assets_urls.dart';
 import 'package:new_love_calculator_2021/utility/colors.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:new_love_calculator_2021/utility/strings.dart';
@@ -29,10 +29,9 @@ class CustomDragableBottomSheet extends StatefulWidget {
 }
 
 class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
-  String _firstGender = '';
-  String _secondGender = '';
+  final String _firstGender = '';
+  final String _secondGender = '';
   int _lovePercentage = 0;
-
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +60,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
   Widget makeDismissible(BuildContext context, {required Widget child}) =>
       GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: () => Navigator.of(context).pop(),
+        onTap: () => Get.back(),
         child: GestureDetector(
           onTap: () {},
           child: child,
@@ -96,7 +95,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
                         alignment: Alignment.center,
                         child: SizedBox(
                           height: MediaQuery.of(context).size.height,
-                          child: Lottie.asset('assets/lottie/leaffalling.json',
+                          child: Lottie.asset(LottieAssetsUrl.percentage0to25,
                               fit: BoxFit.cover),
                         ),
                       )
@@ -106,7 +105,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
                             child: SizedBox(
                               height: MediaQuery.of(context).size.height,
                               child: Lottie.asset(
-                                  'assets/lottie/simplehearts.json',
+                                  LottieAssetsUrl.percentage25to50,
                                   fit: BoxFit.cover),
                             ),
                           )
@@ -116,7 +115,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
                                 child: SizedBox(
                                   height: MediaQuery.of(context).size.height,
                                   child: Lottie.asset(
-                                      'assets/lottie/heartfly.json',
+                                      LottieAssetsUrl.percentage50to75,
                                       fit: BoxFit.cover),
                                 ),
                               )
@@ -127,7 +126,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
                                       height:
                                           MediaQuery.of(context).size.height,
                                       child: Lottie.asset(
-                                          'assets/lottie/heartbanner.json',
+                                          LottieAssetsUrl.percentage75to100,
                                           fit: BoxFit.cover),
                                     ),
                                   )
@@ -189,7 +188,8 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
                             direction: Axis.vertical,
                             children: [
                               Icon(
-                                _secondGender.contains(UsableStrings.genderFemale)
+                                _secondGender
+                                        .contains(UsableStrings.genderFemale)
                                     ? Icons.female
                                     : Icons.male,
                                 color: Colors.white,
@@ -245,7 +245,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
               insideText: '',
               icon: Icons.close,
               onPressedFunction: () {
-                Navigator.of(context).pop();
+                Get.back();
               }),
         ],
       );

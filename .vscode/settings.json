@@ -18,5 +18,6 @@
     "titleBar.inactiveBackground": "#57086199",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#570861"
+  "peacock.color": "#570861",
+  "cSpell.words": ["cupertino"]
 }

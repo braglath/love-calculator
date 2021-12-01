@@ -17,7 +17,7 @@ class _CustomChipsState extends State<CustomChips> {
   bool _isMaleSelected = false;
   bool _isFemaleSelected = false;
   String _gender = '';
-  String _firstGender = '';
+  final String _firstGender = '';
 
   @override
   Widget build(BuildContext context) {
