@@ -27,11 +27,13 @@ class UsableStrings {
 
   // ! services
   // ? google ad service
-  static const String bannerAdUnitID = 'ca-app-pub-3940256099942544/6300978111';
+  static const String androidValueAppID =
+      "ca-app-pub-8309697684472469~4299415118";
+  static const String bannerAdUnitID = 'ca-app-pub-8309697684472469/1481680081';
   static const String interstitialAdUnitID =
-      'ca-app-pub-3940256099942544/1033173712';
+      'ca-app-pub-8309697684472469/3839130554';
   static const String rewardedAdUnitID =
-      'ca-app-pub-3940256099942544/5224354917';
+      'ca-app-pub-8309697684472469/1513006659';
 
   // ? razorpay remove ads
   static const String paymentSuccessful =

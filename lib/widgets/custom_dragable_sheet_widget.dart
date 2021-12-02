@@ -318,8 +318,8 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
       return;
     }
     _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (RewardedAd ad) =>{},
-          // print('ad onAdShowedFullScreenContent.'),
+      onAdShowedFullScreenContent: (RewardedAd ad) => {},
+      // print('ad onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (RewardedAd ad) async {
         // print('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
