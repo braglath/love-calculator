@@ -50,7 +50,7 @@ class _CustomChipsState extends State<CustomChips> {
                     } else {
                       GenderStorage().saveSecondGenderToBox(_gender);
                     }
-                    print('gender storage - $_gender');
+                    // print('gender storage - $_gender');
                   },
                   child: CircleAvatar(
                     backgroundColor: ThemeService().theme == ThemeMode.light
@@ -75,7 +75,7 @@ class _CustomChipsState extends State<CustomChips> {
                   } else {
                     GenderStorage().saveSecondGenderToBox(_gender);
                   }
-                  print('gender storage - $_gender');
+                  // print('gender storage - $_gender');
                 },
                 child: CircleAvatar(
                   backgroundColor: ThemeService().theme == ThemeMode.light

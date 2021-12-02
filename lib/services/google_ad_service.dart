@@ -29,12 +29,16 @@ class AdMobService {
         size: AdSize.largeBanner,
         adUnitId: bannerAdUnitId,
         listener: BannerAdListener(
-            onAdLoaded: (Ad ad) => print('Ad loaded'),
+            onAdLoaded: (Ad ad) => {},
+            // print('Ad loaded'),
             onAdFailedToLoad: (Ad ad, LoadAdError error) {
               ad.dispose();
             },
-            onAdOpened: (Ad ad) => print('Ad opened'),
-            onAdClosed: (Ad ad) => print('On Ad closed')),
+            onAdOpened: (Ad ad) => {},
+            // print('Ad opened'),
+            onAdClosed: (Ad ad) => {},
+            // print('On Ad closed')
+            ),
         request: const AdRequest());
 
     return ad;
@@ -50,7 +54,7 @@ class AdMobService {
           _interstitialAd = ad;
         },
         onAdFailedToLoad: (LoadAdError error) {
-          print('intertitial ad load error - $error');
+          // print('intertitial ad load error - $error');
         },
       ),
     );
@@ -62,15 +66,15 @@ class AdMobService {
     } else {
       _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
         onAdShowedFullScreenContent: (InterstitialAd ad) {
-          print("ad onAdshowedFullscreen");
+          // print("ad onAdshowedFullscreen");
         },
         onAdWillDismissFullScreenContent: (InterstitialAd ad) {
-          print("ad Disposed");
+          // print("ad Disposed");
           ad.dispose();
         },
         onAdFailedToShowFullScreenContent:
             (InterstitialAd ad, AdError aderror) {
-          print("$ad OnAdFailed $aderror");
+          // print("$ad OnAdFailed $aderror");
           ad.dispose();
           createInterAd();
         },
@@ -85,12 +89,12 @@ class AdMobService {
         request: const AdRequest(),
         rewardedAdLoadCallback: RewardedAdLoadCallback(
           onAdLoaded: (RewardedAd ad) {
-            print('$ad loaded.');
+            // print('$ad loaded.');
             _rewardedAd = ad;
             _numRewardedLoadAttempts = 0;
           },
           onAdFailedToLoad: (LoadAdError error) {
-            print('RewardedAd failed to load: $error');
+            // print('RewardedAd failed to load: $error');
             _rewardedAd = null;
             _numRewardedLoadAttempts += 1;
             if (_numRewardedLoadAttempts <= maxFailedLoadAttempts) {
@@ -102,19 +106,19 @@ class AdMobService {
 
   void showRewardedAd() {
     if (_rewardedAd == null) {
-      print('Warning: attempt to show rewarded before loaded.');
+      // print('Warning: attempt to show rewarded before loaded.');
       return;
     }
     _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (RewardedAd ad) =>
-          print('ad onAdShowedFullScreenContent.'),
+      onAdShowedFullScreenContent: (RewardedAd ad) =>{},
+          // print('ad onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (RewardedAd ad) {
-        print('$ad onAdDismissedFullScreenContent.');
+        // print('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
         createRewardedAd();
       },
       onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
-        print('$ad onAdFailedToShowFullScreenContent: $error');
+        // print('$ad onAdFailedToShowFullScreenContent: $error');
         ad.dispose();
         createRewardedAd();
       },
@@ -122,7 +126,7 @@ class AdMobService {
 
     _rewardedAd!.setImmersiveMode(true);
     _rewardedAd!.show(onUserEarnedReward: (RewardedAd ad, RewardItem reward) {
-      print('$ad with reward $RewardItem(${reward.amount}, ${reward.type}');
+      // print('$ad with reward $RewardItem(${reward.amount}, ${reward.type}');
     });
     _rewardedAd = null;
   }

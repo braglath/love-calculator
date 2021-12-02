@@ -12,8 +12,8 @@ class APIservices {
       'x-rapidapi-host': APIstrings.rapidAPIhostUrl,
       'x-rapidapi-key': APIstrings.apiKey
     });
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    // print('Response status: ${response.statusCode}');
+    // print('Response body: ${response.body}');
     if (response.statusCode == 200) {
       return LovePercentageModel.fromJson(jsonDecode(response.body));
     } else {

@@ -3,8 +3,6 @@ import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:new_love_calculator_2021/services/find_paid_user.dart';
 import 'package:new_love_calculator_2021/services/razorpay_removeAds_payment.dart';
 import 'package:new_love_calculator_2021/services/theme_service.dart';
-import 'package:new_love_calculator_2021/utility/assets_urls.dart';
-import 'package:new_love_calculator_2021/utility/colors.dart';
 import 'package:new_love_calculator_2021/utility/strings.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
@@ -64,7 +62,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
           color: Colors.white,
         ),
         onPressed: () {
-          print('razorpay to stop ads');
+          // print('razorpay to stop ads');
           RemoveAds().openCheckout(razorpay);
         },
       );

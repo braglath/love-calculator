@@ -1,4 +1,4 @@
-package com.example.new_love_calculator_2021
+package com.love.calculator
 
 import io.flutter.embedding.android.FlutterActivity
 

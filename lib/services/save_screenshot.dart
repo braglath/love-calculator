@@ -30,7 +30,7 @@ class SaveScreenshot {
     final directory = await getApplicationDocumentsDirectory();
     final image = File('${directory.path}/new_love_calculator_2021.png');
     image.writeAsBytesSync(bytes);
-    print('save and share - $image');
+    // print('save and share - $image');
     const text = 'New Love Calculator 2021 \n Download the app now!';
     await Share.shareFiles([image.path], text: text);
   }

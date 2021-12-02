@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -118,7 +115,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
           LovePercentageStorage()
               .saveLovePercentage(int.parse(snapshot.data!.percentage));
           _lovePercentage = LovePercentageStorage().loadLovePercentage();
-          print('love percentage $_lovePercentage');
+          // print('love percentage $_lovePercentage');
 
           return CustomOpacityAnimation(
             duration: const Duration(seconds: 2),
@@ -300,12 +297,12 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
         request: const AdRequest(),
         rewardedAdLoadCallback: RewardedAdLoadCallback(
           onAdLoaded: (RewardedAd ad) {
-            print('$ad loaded.');
+            // print('$ad loaded.');
             _rewardedAd = ad;
             _numRewardedLoadAttempts = 0;
           },
           onAdFailedToLoad: (LoadAdError error) {
-            print('RewardedAd failed to load: $error');
+            // print('RewardedAd failed to load: $error');
             _rewardedAd = null;
             _numRewardedLoadAttempts += 1;
             if (_numRewardedLoadAttempts <= maxFailedLoadAttempts) {
@@ -317,14 +314,14 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
 
   void _showRewardedAd() {
     if (_rewardedAd == null) {
-      print('Warning: attempt to show rewarded before loaded.');
+      // print('Warning: attempt to show rewarded before loaded.');
       return;
     }
     _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (RewardedAd ad) =>
-          print('ad onAdShowedFullScreenContent.'),
+      onAdShowedFullScreenContent: (RewardedAd ad) =>{},
+          // print('ad onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (RewardedAd ad) async {
-        print('$ad onAdDismissedFullScreenContent.');
+        // print('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
         _isPaidUser ? null : _createRewardedAd();
         final image = await screenshotController.capture();
@@ -332,7 +329,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
         await SaveScreenshot().saveAndShare(image);
       },
       onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
-        print('$ad onAdFailedToShowFullScreenContent: $error');
+        // print('$ad onAdFailedToShowFullScreenContent: $error');
         ad.dispose();
         _createRewardedAd();
       },
@@ -340,7 +337,7 @@ class _CustomDragableBottomSheetState extends State<CustomDragableBottomSheet> {
 
     _rewardedAd!.setImmersiveMode(true);
     _rewardedAd!.show(onUserEarnedReward: (RewardedAd ad, RewardItem reward) {
-      print('$ad with reward $RewardItem(${reward.amount}, ${reward.type}');
+      // print('$ad with reward $RewardItem(${reward.amount}, ${reward.type}');
     });
     _rewardedAd = null;
   }
