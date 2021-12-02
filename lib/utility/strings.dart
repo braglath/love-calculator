@@ -22,6 +22,9 @@ class UsableStrings {
   static const String nameIsEmpty = "Name cannot be empty";
   static const String moreThan12Charc = "Do not enter more than 12 characters";
 
+  // ? custom screenshot saved widget
+  static const String screenshotSaved = 'Screenshot saved successfully';
+
   // ! services
   // ? google ad service
   static const String bannerAdUnitID = 'ca-app-pub-3940256099942544/6300978111';
@@ -29,4 +32,9 @@ class UsableStrings {
       'ca-app-pub-3940256099942544/1033173712';
   static const String rewardedAdUnitID =
       'ca-app-pub-3940256099942544/5224354917';
+
+  // ? razorpay remove ads
+  static const String paymentSuccessful =
+      'Payment successful! \n Ads have been removed';
+  static const String paymentFailed = 'Payment failed \n Try again';
 }

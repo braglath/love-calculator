@@ -4,12 +4,12 @@ import 'package:new_love_calculator_2021/services/theme_service.dart';
 import 'package:new_love_calculator_2021/utility/colors.dart';
 
 class CustomScreenshotSaved {
-  void screenshotSaved(void Function()? onConfirm) {
+  void screenshotSaved(void Function()? onConfirm, String title) {
     Get.defaultDialog(
       backgroundColor: ThemeService().theme == ThemeMode.light
           ? ColorResources.mainLightColor
           : ColorResources.mainDarkColor,
-      title: 'Screenshot saved successfully',
+      title: title,
       content: CircleAvatar(
           backgroundColor: Colors.white,
           child: Icon(

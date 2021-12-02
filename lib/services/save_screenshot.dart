@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:new_love_calculator_2021/utility/strings.dart';
 import 'package:new_love_calculator_2021/widgets/custom_screenshot_saved_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -18,7 +19,8 @@ class SaveScreenshot {
     final result = await ImageGallerySaver.saveImage(bytes, name: name);
     // print(' save screenshot - $result');
     if (result['errorMessage'] == null) {
-      CustomScreenshotSaved().screenshotSaved(() => Get.back());
+      CustomScreenshotSaved()
+          .screenshotSaved(() => Get.back(), UsableStrings.screenshotSaved);
     }
 
     return result['filePath'];

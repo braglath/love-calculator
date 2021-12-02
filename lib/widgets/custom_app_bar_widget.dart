@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
+import 'package:new_love_calculator_2021/services/find_paid_user.dart';
+import 'package:new_love_calculator_2021/services/razorpay_removeAds_payment.dart';
 import 'package:new_love_calculator_2021/services/theme_service.dart';
 import 'package:new_love_calculator_2021/utility/assets_urls.dart';
 import 'package:new_love_calculator_2021/utility/colors.dart';
 import 'package:new_love_calculator_2021/utility/strings.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
   final bool needBackButton;
@@ -18,6 +21,25 @@ class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
+  late Razorpay razorpay;
+
+  @override
+  void initState() {
+    super.initState();
+    razorpay = Razorpay();
+    razorpay.on(
+        Razorpay.EVENT_PAYMENT_SUCCESS, RemoveAds().handlerPaymentSuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, RemoveAds().handlerErrorFailure);
+    razorpay.on(
+        Razorpay.EVENT_EXTERNAL_WALLET, RemoveAds().handlerExternalWallet);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    razorpay.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -27,7 +49,14 @@ class _CustomAppBarState extends State<CustomAppBar> {
         UsableStrings.appBarTitle,
         style: context.theme.textTheme.headline6,
       ),
-      leading: IconButton(
+      leading: FindPaidUser().checkisPaidUser() ? null : _leadingIcon(),
+      actions: <Widget>[
+        _nightModeToggle(),
+      ],
+    );
+  }
+
+  Widget _leadingIcon() => IconButton(
         splashRadius: 12,
         tooltip: UsableStrings.noADSToolTip,
         icon: const Icon(
@@ -36,13 +65,9 @@ class _CustomAppBarState extends State<CustomAppBar> {
         ),
         onPressed: () {
           print('razorpay to stop ads');
+          RemoveAds().openCheckout(razorpay);
         },
-      ),
-      actions: <Widget>[
-        _nightModeToggle(),
-      ],
-    );
-  }
+      );
 
   Widget _nightModeToggle() {
     return IconButton(
